@@ -1,4 +1,4 @@
-name: EKS CI/CD Pipeline
+name: EKS CI/CD with Helm
 
 on:
   push:
@@ -7,6 +7,10 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
 
     steps:
       - uses: actions/checkout@v4
@@ -17,15 +21,12 @@ jobs:
           role-to-assume: arn:aws:iam::123456789012:role/github-eks-deployer
           aws-region: us-east-1
 
-      - name: Build & Push Docker Image
+      - name: Build & Push Image
         run: |
           docker build -t myrepo/myapp:${{ github.sha }} .
           docker push myrepo/myapp:${{ github.sha }}
 
-      - name: Deploy Green Version
+      - name: Deploy via Helm
         run: |
-          kubectl apply -f k8s/base/deployment-green.yaml
-
-      - name: Switch Traffic to Green
-        run: |
-          kubectl patch svc myapp -p '{"spec":{"selector":{"app":"myapp","version":"green"}}}'
+          helm upgrade --install myapp helm/myapp \
+            --set image.tag=${{ github.sha }}
