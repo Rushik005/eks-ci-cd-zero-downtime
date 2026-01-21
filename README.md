@@ -21,7 +21,7 @@ This repository demonstrates a production-ready AWS EKS platform built using Ter
 - GitHub Actions (for CI/CD)
 
 ### Provision EKS Infrastructure
-cd terraform/envs/prod
-terraform init
-terraform plan
-terraform apply
+- cd terraform/envs/prod
+- terraform init
+- terraform plan
+- terraform apply
