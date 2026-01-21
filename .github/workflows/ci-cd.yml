@@ -1,0 +1,31 @@
+name: EKS CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::123456789012:role/github-eks-deployer
+          aws-region: us-east-1
+
+      - name: Build & Push Docker Image
+        run: |
+          docker build -t myrepo/myapp:${{ github.sha }} .
+          docker push myrepo/myapp:${{ github.sha }}
+
+      - name: Deploy Green Version
+        run: |
+          kubectl apply -f k8s/base/deployment-green.yaml
+
+      - name: Switch Traffic to Green
+        run: |
+          kubectl patch svc myapp -p '{"spec":{"selector":{"app":"myapp","version":"green"}}}'
