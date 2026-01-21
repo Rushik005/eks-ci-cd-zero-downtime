@@ -13,3 +13,9 @@ module "eks" {
   subnet_ids         = module.vpc.private_subnets
   node_instance_type = var.node_instance_type
 }
+
+module "alb_controller" {
+  source              = "../../modules/alb-controller"
+  oidc_provider_arn   = module.eks.oidc_provider_arn
+  oidc_provider       = module.eks.oidc_provider
+}
