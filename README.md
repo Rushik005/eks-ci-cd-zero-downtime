@@ -57,4 +57,33 @@ This repository demonstrates a production-ready AWS EKS platform built using Ter
 - No long-lived AWS access keys
 - IAM roles scoped to least privilege
 - Kubernetes access via EKS IAM integration
+
 🚫 No credentials, secrets, or sensitive values are committed
+
+### 🔁 Zero-Downtime & Rollback Strategy
+## Zero-Downtime
+- Kubernetes rolling updates
+- ALB health checks
+- Helm release versioning
+
+## Rollback
+- helm rollback myapp
+
+Rollback is instant and safe, restoring the previous application version.
+
+### 📌 Summary
+
+This project shows how to:
+- Build EKS using Terraform
+- Manage Kubernetes apps with Helm
+- Expose services using ALB Ingress
+- Automate deployments using GitHub Actions
+- Achieve zero-downtime releases with rollback support
+
+This setup can be extended with:
+- HPA & metrics-server
+- Canary deployments
+- Argo CD
+- WAF on ALB
+- Multi-environment support
+- Monitoring & alerting
