@@ -43,3 +43,18 @@ This repository demonstrates a production-ready AWS EKS platform built using Ter
 ## 📁 Repository Structure
 
 <img width="666" height="741" alt="image" src="https://github.com/user-attachments/assets/ebd989fa-a23b-461d-93ef-dff8a091fca3" />
+
+## 🔄 CI/CD Pipeline (GitHub Actions)
+### Pipeline Flow
+- Code pushed to main
+- Docker image built and pushed
+- Helm upgrade executed on EKS
+- ALB routes traffic automatically
+- Application updated with zero downtime
+
+## 🔐 Security & Authentication
+- GitHub Actions authenticates to AWS using OIDC
+- No long-lived AWS access keys
+- IAM roles scoped to least privilege
+- Kubernetes access via EKS IAM integration
+🚫 No credentials, secrets, or sensitive values are committed
